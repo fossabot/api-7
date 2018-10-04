@@ -1,0 +1,31 @@
+{
+  "name": "paderbornjs-api",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "repository": "https://github.com/paderbornjs/api",
+  "author": "Christoph Werner <christoph@codepunkt.de>",
+  "license": "MIT",
+  "private": true,
+  "now": {
+    "alias": "api.paderbornjs.org",
+    "env": {
+      "NODE_ENV": "production"
+    },
+    "dotenv": ".env.production"
+  },
+  "scripts": {
+    "deploy": "now --public && now alias",
+    "start": "ts-node src/index.ts"
+  },
+  "dependencies": {
+    "apollo-server": "^2.1.0",
+    "apollo-server-express": "^2.1.0",
+    "graphql": "^14.0.2"
+  },
+  "devDependencies": {
+    "now": "^11.4.6",
+    "prettier": "^1.14.3",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.1.1"
+  }
+}

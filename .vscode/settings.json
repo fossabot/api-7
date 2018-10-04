@@ -1,0 +1,9 @@
+{
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": true
+    },
+    "gitlens.currentLine.enabled": false,
+    "gitlens.mode.statusBar.enabled": true,
+    "typescript.referencesCodeLens.enabled": true
+  }

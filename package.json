@@ -8,14 +8,17 @@
   "private": true,
   "now": {
     "alias": "api.paderbornjs.org",
-    "env": {
-      "NODE_ENV": "production"
-    },
-    "dotenv": ".env.production"
+    "dotenv": ".env.production",
+    "files": [
+      "build"
+    ]
   },
   "scripts": {
+    "compile": "rm -rf build && tsc",
+    "predeploy": "yarn compile",
     "deploy": "now --public && now alias",
-    "start": "ts-node src/index.ts"
+    "now-start": "NODE_ENV=production node build/index.js",
+    "start": "NODE_ENV=development ts-node src/index.ts"
   },
   "dependencies": {
     "apollo-server": "^2.1.0",
@@ -23,6 +26,7 @@
     "graphql": "^14.0.2"
   },
   "devDependencies": {
+    "@types/graphql": "^14.0.1",
     "now": "^11.4.6",
     "prettier": "^1.14.3",
     "ts-node": "^7.0.1",

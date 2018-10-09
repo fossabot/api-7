@@ -1,0 +1,14 @@
+type Organizer {
+  name: String
+  description: String
+  twitter: TwitterAccount
+}
+
+type TwitterAccount {
+  name: String
+  profileImageUrl: String
+}
+
+type Query {
+  organizers: [Organizer]
+}

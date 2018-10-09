@@ -16,25 +16,25 @@
     "precompile": "rm -rf build && mkdir build && find ./src -name '*.graphql' -exec cp -pr  '{}' 'build/' ';'",
     "compile": "tsc",
     "predeploy": "yarn run compile",
-    "deploy": "now --public && now alias",
+    "deploy": "now -e TWITTER_API_KEY=@twitter_api_key -e TWITTER_API_SECRET=@twitter_api_secret --public && now alias",
+    "postdeploy": "now rm paderbornjs-api --safe --yes",
     "now-start": "NODE_ENV=production node build/index.js",
     "start": "NODE_ENV=development nodemon -e ts,graphql --exec ts-node src/index.ts"
   },
   "dependencies": {
     "apollo-server": "^2.1.0",
     "apollo-server-express": "^2.1.0",
-    "cors": "^2.8.4",
     "dotenv": "^6.1.0",
     "got": "^9.2.2",
     "graphql": "^14.0.2",
     "helmet": "^3.13.0"
   },
   "devDependencies": {
-    "@types/cors": "^2.8.4",
     "@types/dotenv": "^4.0.3",
     "@types/got": "^8.3.4",
     "@types/graphql": "^14.0.1",
     "@types/helmet": "^0.0.42",
+    "@types/node": "^10.11.5",
     "nodemon": "^1.18.4",
     "now": "^11.4.6",
     "prettier": "^1.14.3",

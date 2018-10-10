@@ -4,7 +4,7 @@ import ServiceCache from './ServiceCache'
 class ServiceFetcher {
   constructor(private cache: ServiceCache = new ServiceCache()) {}
 
-  public async fetch(url: string, options: any): Promise<any> {
+  public async fetch(url: string, options: any = {}): Promise<any> {
     const cacheData = this.cache.get(url)
 
     if (cacheData) {

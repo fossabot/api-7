@@ -133,7 +133,13 @@
   dependencies:
     "@types/node" "*"
 
-"@types/graphql@^14.0.1":
+"@types/graphql-iso-date@^3.3.0":
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/@types/graphql-iso-date/-/graphql-iso-date-3.3.0.tgz#31ec2ddcbac146b4fe7e2afe459d589ee3363115"
+  dependencies:
+    "@types/graphql" "*"
+
+"@types/graphql@*", "@types/graphql@^14.0.1":
   version "14.0.2"
   resolved "https://registry.yarnpkg.com/@types/graphql/-/graphql-14.0.2.tgz#415e3779718c1e0805e418e3a798cb39dccc58ab"
 
@@ -1123,6 +1129,10 @@ graphql-extensions@^0.2.1:
   resolved "https://registry.yarnpkg.com/graphql-extensions/-/graphql-extensions-0.2.1.tgz#7697e0fcea2e622afe9e24dd31fc84f533e84c70"
   dependencies:
     apollo-server-env "^2.0.3"
+
+graphql-iso-date@^3.6.1:
+  version "3.6.1"
+  resolved "https://registry.yarnpkg.com/graphql-iso-date/-/graphql-iso-date-3.6.1.tgz#bd2d0dc886e0f954cbbbc496bbf1d480b57ffa96"
 
 graphql-subscriptions@^0.5.8:
   version "0.5.8"

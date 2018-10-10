@@ -1,11 +1,13 @@
 import TwitterService from '../services/TwitterService'
 
-class TwitterResolver {
+const organizers: string[] = ['code_punkt']
+
+class OrganizersResolver {
   constructor(private twitterService: TwitterService = new TwitterService()) {}
 
-  public resolve(usernames: string[]): Promise<any> {
+  public resolve(): Promise<any> {
     return this.twitterService
-      .fetch(`users/lookup.json?screen_name=${usernames.join(',')}`)
+      .fetch(`users/lookup.json?screen_name=${organizers.join(',')}`)
       .then(users =>
         users.map(user => ({
           name: user.name,
@@ -22,4 +24,4 @@ class TwitterResolver {
   }
 }
 
-export default TwitterResolver
+export default OrganizersResolver

@@ -1,14 +1,34 @@
+scalar DateTime
+
 type Organizer {
-  name: String
-  description: String
-  twitter: TwitterAccount
+  description: String!
+  name: String!
+  twitter: TwitterAccount!
 }
 
 type TwitterAccount {
-  name: String
-  profileImageUrl: String
+  name: String!
+  profileImageUrl: String!
+}
+
+type Speaker {
+  avatarUrl: String!
+  name: String!
+  occupation: String!
+  socialName: String!
+  socialUrl: String!
+}
+
+type Talk {
+  date: DateTime!
+  description: String!
+  isLightningTalk: Boolean!
+  labels: [String!]!
+  speaker: Speaker!
+  title: String!
 }
 
 type Query {
-  organizers: [Organizer]
+  organizers: [Organizer!]!
+  upcomingTalks: [Talk!]!
 }

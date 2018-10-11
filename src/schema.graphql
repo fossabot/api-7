@@ -12,8 +12,8 @@ type TwitterAccount {
 }
 
 type Event {
+  date: DateTime!
   goingCount: Int!
-  time: DateTime!
   url: String!
   venue: EventVenue!
 }

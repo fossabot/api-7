@@ -6,19 +6,13 @@
   "author": "Christoph Werner <christoph@codepunkt.de>",
   "license": "MIT",
   "private": true,
-  "now": {
-    "alias": "api.paderbornjs.org",
-    "files": [
-      "build"
-    ]
-  },
   "scripts": {
     "precompile": "rm -rf build && mkdir build && find ./src -name '*.graphql' -exec cp -pr  '{}' 'build/' ';'",
     "compile": "tsc",
-    "predeploy": "yarn run compile",
-    "deploy": "now -e TWITTER_API_KEY=@twitter_api_key -e TWITTER_API_SECRET=@twitter_api_secret --public && now alias",
-    "postdeploy": "now rm paderbornjs-api --safe --yes",
+    "manual-deploy": "now --public && now alias && yarn remove-old-deploys",
+    "now-build": "yarn run compile",
     "now-start": "NODE_ENV=production node build/index.js",
+    "remove-old-deploys": "now rm paderbornjs-api --safe --yes",
     "start": "NODE_ENV=development nodemon -e ts,graphql --exec ts-node src/index.ts"
   },
   "dependencies": {

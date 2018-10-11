@@ -1,0 +1,10 @@
+{
+  "name": "paderbornjs-api",
+  "alias": "api.paderbornjs.org",
+  "type": "npm",
+  "env": {
+    "MEETUP_KEY": "@meetup_key",
+    "TWITTER_API_KEY": "@twitter_api_key",
+    "TWITTER_API_SECRET": "@twitter_api_secret"
+  }
+}

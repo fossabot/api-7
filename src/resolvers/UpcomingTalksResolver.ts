@@ -64,7 +64,6 @@ class UpcomingTalksResolver {
   }
 
   private parseTalkInformation(issueBody: string): any {
-    console.log(issueBody)
     const [
       name,
       occupation,

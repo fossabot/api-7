@@ -7,6 +7,7 @@ import { GraphQLDateTime } from 'graphql-iso-date'
 import * as helmet from 'helmet'
 import { join } from 'path'
 import OrganizersResolver from './resolvers/OrganizersResolver'
+import UpcomingEventsResolver from './resolvers/UpcomingEventsResolver'
 import UpcomingTalksResolver from './resolvers/UpcomingTalksResolver'
 import EnvironmentHelper from './utils/EnvironmentHelper'
 
@@ -20,6 +21,7 @@ const typeDefs = gql`
 
 const organizersResolver = new OrganizersResolver()
 const upcomingTalksResolver = new UpcomingTalksResolver()
+const upcomingEventsResolver = new UpcomingEventsResolver()
 
 const server = new ApolloServer({
   typeDefs,
@@ -27,6 +29,7 @@ const server = new ApolloServer({
     DateTime: GraphQLDateTime,
     Query: {
       organizers: () => organizersResolver.resolve(),
+      upcomingEvents: () => upcomingEventsResolver.resolve(),
       upcomingTalks: () => upcomingTalksResolver.resolve(),
     },
   },

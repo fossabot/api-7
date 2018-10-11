@@ -11,12 +11,20 @@ type TwitterAccount {
   profileImageUrl: String!
 }
 
-type Speaker {
-  avatarUrl: String!
+type Event {
+  goingCount: Int!
+  time: DateTime!
+  url: String!
+  venue: EventVenue!
+}
+
+type EventVenue {
+  city: String!
+  country: String!
+  lat: Float!
+  lon: Float!
   name: String!
-  occupation: String!
-  socialName: String!
-  socialUrl: String!
+  street: String!
 }
 
 type Talk {
@@ -28,7 +36,16 @@ type Talk {
   title: String!
 }
 
+type Speaker {
+  avatarUrl: String!
+  name: String!
+  occupation: String!
+  socialName: String!
+  socialUrl: String!
+}
+
 type Query {
   organizers: [Organizer!]!
+  upcomingEvents: [Event!]!
   upcomingTalks: [Talk!]!
 }

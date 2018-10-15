@@ -3,7 +3,7 @@ import UpcomingTalksResolver, { IGithubIssue } from './UpcomingTalksResolver'
 
 const now = new Date()
 const tomorrow = new Date()
-tomorrow.setDate(now.getDate() + 1)
+tomorrow.setDate(tomorrow.getDate() + 1)
 
 const mockUser = { avatar_url: 'https://example.com/avatar_url.jpg' }
 const mockIssues: IGithubIssue[] = [

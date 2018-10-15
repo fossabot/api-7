@@ -32,8 +32,6 @@ jobs:
       - run:
           name: Perform build
           command: yarn run ci:build
-      - store_artifacts:
-          path: build
 
   test:
     <<: *defaults
@@ -43,10 +41,6 @@ jobs:
       - run:
           name: Perform Tests
           command: yarn run ci:test
-      - store_test_results:
-          path: test_results/jest
-      - store_artifacts:
-          path: test_results/jest
 
   lint:
     <<: *defaults
@@ -56,10 +50,6 @@ jobs:
       - run:
           name: Perform Lint
           command: yarn run ci:lint
-      - store_test_results:
-          path: test_results/tslint
-      - store_artifacts:
-          path: test_results/tslint
 
 workflows:
   version: 2

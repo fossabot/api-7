@@ -1,8 +1,9 @@
 import * as got from 'got'
+import IServiceCache from './IServiceCache'
 import ServiceCache from './ServiceCache'
 
 export default class ServiceFetcher {
-  constructor(private cache: ServiceCache = new ServiceCache()) {}
+  constructor(private cache: IServiceCache = new ServiceCache()) {}
 
   public async fetch(url: string, options: any = {}): Promise<any> {
     const cacheData = this.cache.get(url)

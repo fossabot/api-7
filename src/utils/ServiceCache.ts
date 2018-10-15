@@ -1,12 +1,13 @@
-interface CacheEntry {
+interface ICacheEntry {
   data: any
   lastUpdated: number
 }
 
 export default class ServiceCache {
-  private cache: Map<string, CacheEntry> = new Map()
+  public static DEFAULT_TTL = 1800000
+  private cache: Map<string, ICacheEntry> = new Map()
 
-  constructor(private timeToLive: number = 1800000) {}
+  constructor(private timeToLive: number = ServiceCache.DEFAULT_TTL) {}
 
   public set(key: string, data: any): void {
     this.cache.set(key, {
@@ -22,7 +23,7 @@ export default class ServiceCache {
 
     const { data, lastUpdated } = this.cache.get(key)
 
-    if (Date.now() - lastUpdated > this.timeToLive) {
+    if (Date.now() - lastUpdated >= this.timeToLive) {
       return null
     }
 

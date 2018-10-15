@@ -14,11 +14,18 @@
     "remove-old-deploys": "now rm paderbornjs-api --safe --yes",
     "lint": "tslint -t verbose --project .",
     "test": "jest --watch --silent",
+    "precommit": "lint-staged",
     "ci:build": "CI=true yarn run compile",
     "ci:lint": "CI=true yarn run lint",
     "ci:test": "CI=true TWITTER_API_KEY=test TWITTER_API_SECRET=test MEETUP_KEY=test jest --runInBand --silent --colors && codecov -t $CODECOV_TOKEN",
     "now-build": "yarn run compile",
     "now-start": "NODE_ENV=production node build/index.js"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "dependencies": {
     "apollo-server": "^2.1.0",
@@ -39,8 +46,10 @@
     "@types/node": "^10.11.5",
     "@types/supertest": "^2.0.6",
     "codecov": "^3.1.0",
+    "husky": "^1.1.2",
     "jest": "^23.6.0",
     "jest-junit": "^5.2.0",
+    "lint-staged": "^7.3.0",
     "nodemon": "^1.18.4",
     "now": "^11.4.6",
     "prettier": "^1.14.3",

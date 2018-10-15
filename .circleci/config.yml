@@ -1,0 +1,77 @@
+version: 2.0
+
+defaults: &defaults
+  working_directory: ~/paderbornjs-api
+  docker:
+    - image: circleci/node:10.11.0-stretch
+
+jobs:
+  install:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install dependencies
+          command: yarn
+      - save_cache:
+          key: dependency-cache-{{ checksum "yarn.lock" }}
+          paths:
+            - node_modules
+      - persist_to_workspace:
+          root: ~/paderbornjs-api
+          paths:
+            - '*'
+
+  build:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/paderbornjs-api
+      - run:
+          name: Perform build
+          command: yarn run ci:build
+      - store_artifacts:
+          path: build
+
+  test:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/paderbornjs-api
+      - run:
+          name: Perform Tests
+          command: yarn run ci:test
+      - store_test_results:
+          path: test_results/jest
+      - store_artifacts:
+          path: test_results/jest
+
+  lint:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/paderbornjs-api
+      - run:
+          name: Perform Lint
+          command: yarn run ci:lint
+      - store_test_results:
+          path: test_results/tslint
+      - store_artifacts:
+          path: test_results/tslint
+
+workflows:
+  version: 2
+  continuous-integration:
+    jobs:
+      - install
+      - build:
+          requires:
+            - install
+      - lint:
+          requires:
+            - install
+      - test:
+          requires:
+            - install

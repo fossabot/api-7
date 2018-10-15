@@ -1,19 +1,16 @@
-import EnvironmentHelper from '../utils/EnvironmentHelper'
-import ServiceFetcher from '../utils/ServiceFetcher'
+import IServiceFetcher from '../utils/IServiceFetcher'
 
-const BASE_URL = 'https://api.meetup.com'
-const MEETUP_NAME = 'paderborn-js'
+export default class MeetupEventsService {
+  // public static BASE_URL = 'https://api.meetup.com/paderborn-js'
+  public static BASE_URL = 'https://api.meetup.com/IT-Flash-Paderborn'
 
-let meetupKey: string = EnvironmentHelper.get('MEETUP_KEY')
+  constructor(private meetupKey: string, private fetcher: IServiceFetcher) {}
 
-class MeetupEventsService {
-  constructor(private fetcher: ServiceFetcher = new ServiceFetcher()) {}
-
-  public async fetch(eventStatus: string): Promise<any> {
+  public async retrieve(eventStatus: string): Promise<any> {
     return this.fetcher.fetch(
-      `${BASE_URL}/${MEETUP_NAME}/events?status=${eventStatus}&key=${meetupKey}`
+      `${MeetupEventsService.BASE_URL}/events?status=${eventStatus}&key=${
+        this.meetupKey
+      }`
     )
   }
 }
-
-export default MeetupEventsService

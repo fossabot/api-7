@@ -7,13 +7,18 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "precompile": "rm -rf build && mkdir build && find ./src -name '*.graphql' -exec cp -pr  '{}' 'build/' ';'",
+    "start": "NODE_ENV=development nodemon -e ts,graphql --exec ts-node src/index.ts",
     "compile": "tsc",
-    "manual-deploy": "now --public && now alias && yarn remove-old-deploys",
-    "now-build": "yarn run compile",
-    "now-start": "NODE_ENV=production node build/index.js",
+    "precompile": "rm -rf build && mkdir build && find ./src -name '*.graphql' -exec cp -pr  '{}' 'build/' ';'",
+    "deploy": "now --public && now alias && yarn remove-old-deploys",
     "remove-old-deploys": "now rm paderbornjs-api --safe --yes",
-    "start": "NODE_ENV=development nodemon -e ts,graphql --exec ts-node src/index.ts"
+    "lint": "tslint -t verbose --project .",
+    "test": "jest --watch",
+    "ci:build": "CI=true yarn run compile",
+    "ci:lint": "mkdir -p test_results/tslint && tslint --format junit --out test_results/tslint/results.xml --project .",
+    "ci:test": "JEST_JUNIT_OUTPUT=test_results/jest/results.xml jest --runInBand --colors --reporters=jest-junit",
+    "now-build": "yarn run compile",
+    "now-start": "NODE_ENV=production node build/index.js"
   },
   "dependencies": {
     "apollo-server": "^2.1.0",
@@ -30,11 +35,18 @@
     "@types/graphql": "^14.0.1",
     "@types/graphql-iso-date": "^3.3.0",
     "@types/helmet": "^0.0.42",
+    "@types/jest": "^23.3.5",
     "@types/node": "^10.11.5",
+    "jest": "^23.6.0",
+    "jest-junit": "^5.2.0",
     "nodemon": "^1.18.4",
     "now": "^11.4.6",
     "prettier": "^1.14.3",
+    "ts-jest": "^23.10.4",
     "ts-node": "^7.0.1",
+    "tslint": "^5.11.0",
+    "tslint-config-prettier": "^1.15.0",
+    "tslint-microsoft-contrib": "^5.2.1",
     "typescript": "^3.1.1"
   }
 }

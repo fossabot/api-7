@@ -1,17 +1,14 @@
-import ServiceFetcher from '../utils/ServiceFetcher'
+import IServiceFetcher from '../utils/IServiceFetcher'
 
-const BASE_URL = 'https://api.github.com'
-const REPOSITORY = 'paderbornjs/talks_test'
+export default class GithubIssueService {
+  public static BASE_URL = 'https://api.github.com/repos/paderbornjs/talks_test'
 
-class GithubIssueService {
-  constructor(private fetcher: ServiceFetcher = new ServiceFetcher()) {}
+  constructor(private fetcher: IServiceFetcher) {}
 
-  public async fetch(requiredLabels: string[]): Promise<any> {
+  public async retrieve(requiredLabels: string[]): Promise<any> {
     const labels = requiredLabels.join(',')
     return this.fetcher.fetch(
-      `${BASE_URL}/repos/${REPOSITORY}/issues?state=open&labels=${labels}`
+      `${GithubIssueService.BASE_URL}/issues?state=open&labels=${labels}`
     )
   }
 }
-
-export default GithubIssueService

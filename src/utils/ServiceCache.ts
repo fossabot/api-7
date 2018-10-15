@@ -3,12 +3,12 @@ interface CacheEntry {
   lastUpdated: number
 }
 
-class ServiceCache {
+export default class ServiceCache {
   private cache: Map<string, CacheEntry> = new Map()
 
   constructor(private timeToLive: number = 1800000) {}
 
-  public set(key: string, data): void {
+  public set(key: string, data: any): void {
     this.cache.set(key, {
       data,
       lastUpdated: Date.now(),
@@ -29,5 +29,3 @@ class ServiceCache {
     return data
   }
 }
-
-export default ServiceCache

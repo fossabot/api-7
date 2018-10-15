@@ -1,9 +1,19 @@
-import GithubIssueService from '../services/GithubIssueService'
-
-const lightningTalkLabel: string = 'Lightning Talk'
-const upcomingTalkLabel: string = 'Upcoming Talk'
+import { ITalk } from '../schema'
+import IGithubIssueService from '../services/IGithubIssueService'
 
 const talkRegExp = /^#{5} (.+)(?:\s+#{6} (.+))?(?:\s+#{6} \[(.+)]\((.+)\))?\s+([\s\S]+)\s*$/
+
+export interface IGithubIssue {
+  body: string
+  labels: Array<{ name: string }>
+  milestone?: {
+    due_on: string
+  }
+  title: string
+  user: {
+    avatar_url: string
+  }
+}
 
 /**
  * Upcoming talks are fetched from Github issues - each issue is either a talk
@@ -15,45 +25,60 @@ const talkRegExp = /^#{5} (.+)(?:\s+#{6} (.+))?(?:\s+#{6} \[(.+)]\((.+)\))?\s+([
  * to remove issues that are in the past (and might not have been set to
  * closed yet).
  */
-class UpcomingTalksResolver {
-  constructor(
-    private githubIssueService: GithubIssueService = new GithubIssueService()
-  ) {}
+export default class UpcomingTalksResolver {
+  public static LIGHTNING_TALK_LABEL = 'Lightning Talk'
+  public static UPCOMING_TALK_LABEL = 'Upcoming Talk'
 
-  public resolve(): Promise<any> {
-    return this.githubIssueService.fetch([upcomingTalkLabel]).then(issues =>
-      issues
-        .filter(
-          ({ milestone }) =>
-            Boolean(milestone) &&
-            new Date(milestone.due_on).valueOf() > new Date().valueOf()
-        )
-        .map(issue => {
-          const talkInfo = this.parseTalkInformation(issue.body)
+  constructor(private githubIssueService: IGithubIssueService) {}
 
-          return {
-            date: this.convertMilestoneToMeetupDate(issue.milestone.due_on),
-            description: talkInfo.description,
-            isLightningTalk: issue.labels.some(
-              label => label.name === lightningTalkLabel
-            ),
-            labels: issue.labels
-              .filter(
-                label =>
-                  ![upcomingTalkLabel, lightningTalkLabel].includes(label.name)
-              )
-              .map(label => label.name),
-            speaker: {
-              avatarUrl: issue.user.avatar_url,
-              name: talkInfo.name,
-              occupation: talkInfo.occupation,
-              socialName: talkInfo.socialName,
-              socialUrl: talkInfo.socialUrl,
-            },
-            title: issue.title,
-          }
-        })
-    )
+  public resolve(): Promise<ITalk[]> {
+    return this.githubIssueService
+      .retrieve([UpcomingTalksResolver.UPCOMING_TALK_LABEL])
+      .then(issues =>
+        issues
+          .filter(
+            ({ milestone }: IGithubIssue) =>
+              Boolean(milestone) &&
+              new Date(milestone.due_on).valueOf() > new Date().valueOf()
+          )
+          .map(
+            (issue: IGithubIssue): ITalk => {
+              const talkInfo = this.parseTalkInformation(issue.body)
+
+              return talkInfo
+                ? {
+                    date: this.convertMilestoneToMeetupDate(
+                      issue.milestone.due_on
+                    ),
+                    description: talkInfo.description,
+                    isLightningTalk: issue.labels.some(
+                      label =>
+                        label.name ===
+                        UpcomingTalksResolver.LIGHTNING_TALK_LABEL
+                    ),
+                    labels: issue.labels
+                      .filter(
+                        label =>
+                          ![
+                            UpcomingTalksResolver.UPCOMING_TALK_LABEL,
+                            UpcomingTalksResolver.LIGHTNING_TALK_LABEL,
+                          ].includes(label.name)
+                      )
+                      .map(label => label.name),
+                    speaker: {
+                      avatarUrl: issue.user.avatar_url,
+                      name: talkInfo.name,
+                      occupation: talkInfo.occupation,
+                      socialName: talkInfo.socialName,
+                      socialUrl: talkInfo.socialUrl,
+                    },
+                    title: issue.title,
+                  }
+                : null
+            }
+          )
+          .filter((talk: ITalk) => talk !== null)
+      )
   }
 
   private convertMilestoneToMeetupDate(milestoneDate: string): Date {
@@ -64,13 +89,19 @@ class UpcomingTalksResolver {
   }
 
   private parseTalkInformation(issueBody: string): any {
+    const matches = issueBody.match(talkRegExp)
+
+    if (!matches) {
+      return null
+    }
+
     const [
       name,
       occupation,
       socialName,
       socialUrl,
       description,
-    ] = issueBody.match(talkRegExp).slice(1, 6)
+    ] = matches.slice(1, 6)
 
     return {
       name,
@@ -81,5 +112,3 @@ class UpcomingTalksResolver {
     }
   }
 }
-
-export default UpcomingTalksResolver

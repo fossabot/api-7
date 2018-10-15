@@ -1,6 +1,6 @@
 const environment: Map<string, string> = new Map(Object.entries(process.env))
 
-class EnvironmentHelper {
+export default class EnvironmentHelper {
   public static get(key: string): string {
     const value = environment.get(key)
 
@@ -11,5 +11,3 @@ class EnvironmentHelper {
     return value
   }
 }
-
-export default EnvironmentHelper

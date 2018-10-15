@@ -1,7 +1,7 @@
 import * as got from 'got'
 import ServiceCache from './ServiceCache'
 
-class ServiceFetcher {
+export default class ServiceFetcher {
   constructor(private cache: ServiceCache = new ServiceCache()) {}
 
   public async fetch(url: string, options: any = {}): Promise<any> {
@@ -26,5 +26,3 @@ class ServiceFetcher {
     return body
   }
 }
-
-export default ServiceFetcher

@@ -61,7 +61,7 @@ server.applyMiddleware({
       ? '*'
       : [
           'https://paderbornjs.org',
-          /^https:\/\/deploy-preview-[0-9]+--.netlify.com$/,
+          /^https:\/\/deploy-preview-[0-9]+--paderbornjs.netlify.com$/,
         ],
   },
 })

@@ -57,7 +57,12 @@ server.applyMiddleware({
   app,
   path: '/',
   cors: {
-    origin: isDevEnvironment ? '*' : 'https://paderbornjs.org',
+    origin: isDevEnvironment
+      ? '*'
+      : [
+          'https://paderbornjs.org',
+          /^https:\/\/deploy-preview-[0-9]+--.netlify.com$/,
+        ],
   },
 })
 

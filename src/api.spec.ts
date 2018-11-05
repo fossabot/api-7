@@ -31,11 +31,9 @@ jest.mock('got', () =>
       return {
         body: [
           {
-            body: `##### John Doe
-###### Research Engineer at Spacebook
-###### [@johndoe](https://example.com/johndoe)
-
-Issue 3`,
+            body: `#### John Doe
+##### Research Engineer at Spacebook
+This is an awesome talk about tech`,
             labels: [],
             milestone: {
               due_on: tomorrow.toISOString(),

@@ -21,11 +21,18 @@ const mockIssues: IGithubIssue[] = [
     user: mockUser,
   },
   {
-    body: `##### John Doe
-###### Research Engineer at Spacebook
-###### [@johndoe](https://example.com/johndoe)
+    body: `<!--
+    The "Upcoming Talk" issues for Paderborn.js are used to automatically extract information such
+    as speaker's name, occupation and URL as well as talk title and description.
 
-Issue 3`,
+    In to work, please leave everything below as is and only replace UPPERCASE_PLACEHOLDERS with your
+    information. If you don't have a social link like Twitter or LinkedIn, simply delete that line.
+  -->
+
+  #### John Doe
+  ##### Research Engineer at Spacebook
+
+  Issue 3`,
     labels: [{ name: 'Upcoming Talk' }, { name: 'Architecture' }],
     milestone: { due_on: tomorrow.toISOString() },
     title: 'Issue 3',
@@ -39,11 +46,10 @@ Issue 3`,
     user: mockUser,
   },
   {
-    body: `##### John Doe
-###### Research Engineer at Spacebook
-###### [@johndoe](https://example.com/johndoe)
-
-Issue 5`,
+    body: `#### John Doe
+  ##### Research Engineer at Spacebook
+  ###### [@johndoe](https://example.com/johndoe)
+  Issue 5`,
     labels: [
       { name: 'Upcoming Talk' },
       { name: 'Lightning Talk' },
@@ -122,16 +128,22 @@ describe('UpcomingTalksResolver', () => {
   test('correctly parses information from issue body', async () => {
     const issues = await resolver.resolve()
 
-    const speakerObject = expect.objectContaining({
-      name: 'John Doe',
-      occupation: 'Research Engineer at Spacebook',
-      socialName: '@johndoe',
-      socialUrl: 'https://example.com/johndoe',
-    })
-
     expect(issues[0].description).toEqual('Issue 3')
-    expect(issues[0].speaker).toEqual(speakerObject)
+    expect(issues[0].speaker).toEqual(
+      expect.objectContaining({
+        name: 'John Doe',
+        occupation: 'Research Engineer at Spacebook',
+      })
+    )
+
     expect(issues[1].description).toEqual('Issue 5')
-    expect(issues[1].speaker).toEqual(speakerObject)
+    expect(issues[1].speaker).toEqual(
+      expect.objectContaining({
+        name: 'John Doe',
+        occupation: 'Research Engineer at Spacebook',
+        socialName: '@johndoe',
+        socialUrl: 'https://example.com/johndoe',
+      })
+    )
   })
 })

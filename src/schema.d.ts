@@ -16,8 +16,8 @@ interface ISpeaker {
   avatarUrl: string
   name: string
   occupation: string
-  socialName: string
-  socialUrl: string
+  socialName?: string
+  socialUrl?: string
 }
 
 export interface IOrganizer {

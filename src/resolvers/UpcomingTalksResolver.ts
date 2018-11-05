@@ -1,7 +1,17 @@
 import { ITalk } from '../schema'
 import IGithubIssueService from '../services/IGithubIssueService'
 
-const talkRegExp = /^#{5} (.+)(?:\s+#{6} (.+))?(?:\s+#{6} \[(.+)]\((.+)\))?\s+([\s\S]+)\s*$/
+const issueFormat = new RegExp(
+  [
+    /^[\s\S]*/, // most likely html comment from issue template
+    /(?<!#)#{4} (?<name>.*)\s+/, // name
+    /(?<!#)#{5} (?<occupation>.*)\s+/, // occupation
+    /(?:#{6} \[(?<socialName>.+)\]\((?<socialUrl>.+)\)\s+)?/, // social link
+    /(?<description>[\s\S]+)$/, // description
+  ]
+    .map(r => r.source)
+    .join('')
+)
 
 export interface IGithubIssue {
   body: string
@@ -89,26 +99,7 @@ export default class UpcomingTalksResolver {
   }
 
   private parseTalkInformation(issueBody: string): any {
-    const matches = issueBody.match(talkRegExp)
-
-    if (!matches) {
-      return null
-    }
-
-    const [
-      name,
-      occupation,
-      socialName,
-      socialUrl,
-      description,
-    ] = matches.slice(1, 6)
-
-    return {
-      name,
-      occupation,
-      socialName,
-      socialUrl,
-      description,
-    }
+    const matches = issueBody.match(issueFormat)
+    return matches ? matches.groups : null
   }
 }

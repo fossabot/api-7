@@ -40,8 +40,8 @@ type Speaker {
   avatarUrl: String!
   name: String!
   occupation: String!
-  socialName: String!
-  socialUrl: String!
+  socialName: String
+  socialUrl: String
 }
 
 type Query {

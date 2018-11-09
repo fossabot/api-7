@@ -12,6 +12,7 @@
   <img alt="Code style: Prettier" src="https://img.shields.io/badge/code_style-prettier-c596c7.svg?style=flat-square"></a>
 <a href="https://twitter.com/paderbornjs">
   <img alt="Follow @paderbornjs on Twitter" src="https://img.shields.io/twitter/follow/paderbornjs.svg?label=follow+@paderbornjs&style=flat-square"></a>
+<a href="https://app.fossa.io/projects/git%2Bgithub.com%2Fpaderbornjs%2Fapi?ref=badge_shield" alt="FOSSA Status"><img src="https://app.fossa.io/api/projects/git%2Bgithub.com%2Fpaderbornjs%2Fapi.svg?type=shield"/></a>
 
 
 ## Intro
@@ -59,3 +60,7 @@ MEETUP_KEY=<YOUR MEETUP KEY>
 TWITTER_API_KEY=<YOUR TWITTER API KEY>
 TWITTER_API_SECRET=<YOUR TWITTER API SECRET>
 ```
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fpaderbornjs%2Fapi.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fpaderbornjs%2Fapi?ref=badge_large)

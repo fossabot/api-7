@@ -2,6 +2,9 @@
   "name": "paderbornjs-api",
   "alias": "api.paderbornjs.org",
   "type": "npm",
+  "engines": {
+    "node": "10.13.0"
+  },
   "env": {
     "MEETUP_KEY": "@meetup_key",
     "TWITTER_API_KEY": "@twitter_api_key",
